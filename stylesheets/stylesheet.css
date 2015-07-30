@@ -408,7 +408,7 @@ nav ul li a:hover {
 }
 #member .item {
 	width:150px;
-	min-height:215px;
+	min-height:216px;
 	float:left;
 	margin:10px;
 }
@@ -416,7 +416,7 @@ nav ul li a:hover {
 @media screen and (min-width: 42em) and (max-width: 64em) {
 #member .item {
     width: 29%;
-    min-height: 215px;
+    min-height: 216px;
     float: left;
     margin: 2%;
 	}
@@ -424,7 +424,7 @@ nav ul li a:hover {
  @media screen and (max-width: 42em) {
 #member .item {
     width: 46%;
-    min-height: 215px;
+    min-height: 216px;
     float: left;
     margin: 2%;
 	}
