@@ -402,12 +402,34 @@ nav ul li a:hover {
 	background-color:#F2F2F2;
 	padding-bottom:30px;
 }
+#member .main-content{
+	width:90%;
+	margin:0 auto;
+}
 #member .item {
 	width:150px;
 	min-height:210px;
 	float:left;
 	margin:10px;
 }
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+#member .item {
+    width: 29%;
+    min-height: 210px;
+    float: left;
+    margin: 2%;
+	}
+}
+ @media screen and (max-width: 42em) {
+#member .item {
+    width: 46%;
+    min-height: 210px;
+    float: left;
+    margin: 2%;
+	}
+}
+
 #member .item p {
 	font-size:0.7rem;
 	color:#07747A;
