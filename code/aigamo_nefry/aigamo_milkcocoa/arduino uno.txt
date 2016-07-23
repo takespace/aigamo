@@ -1,0 +1,3 @@
+﻿//int on,speed;//回転方向(on) -1:後退　0:停止　1:前進//速度(speed) 0-255
+//char motor;//どちらのモータか r or l
+sscanf("motor:0:r:100", "motor:%d:%c:%d", &on, &motor, &speed);
