@@ -1,3 +1,5 @@
+//GPS test for aigamo
+//uno
 #include <SoftwareSerial.h>
 
 #define RX 10
