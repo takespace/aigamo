@@ -28,8 +28,12 @@ test\
 \
 ## Usage\
 \
-## Install\
-\
+## Install
+* Install driver for using motor driver.  
+  * sketch → import library → select "DRV8830MotorDriver.zip"
+
+
+
 ## Contribution\
 \
 ## Licence\
