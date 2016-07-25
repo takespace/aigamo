@@ -29,6 +29,7 @@ namespace AigamoControl
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            StoryboardFeet.Begin();
         }
 
         private void ForwardLeft_Click(object sender, RoutedEventArgs e)
