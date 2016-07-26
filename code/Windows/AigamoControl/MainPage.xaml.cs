@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
@@ -29,7 +30,13 @@ namespace AigamoControl
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // 画質が落ちるのを防ぐ措置
+            var bitmapSignal = ImageSignal.Source as BitmapImage;
+            bitmapSignal.DecodePixelWidth = 477;
+            bitmapSignal.DecodePixelHeight = 164;
+
             StoryboardFeet.Begin();
+            Storyboard1.Begin();
         }
 
         private void ForwardLeft_Click(object sender, RoutedEventArgs e)

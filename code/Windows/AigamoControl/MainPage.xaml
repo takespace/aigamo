@@ -11,10 +11,15 @@
             <DoubleAnimation Duration="0:0:1" To="-360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ImageFrontFoot" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:1" To="-360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ImageRearFoot" d:IsOptimized="True"/>
         </Storyboard>
+        <Storyboard x:Name="Storyboard1" RepeatBehavior="Forever">
+            <DoubleAnimation Duration="0:0:1" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="ImageSignal"/>
+            <DoubleAnimation Duration="0:0:1" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="ImageSignal"/>
+            <DoubleAnimation Duration="0:0:1" To="15" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ImageSignal"/>
+        </Storyboard>
     </Page.Resources>
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Canvas Width="200" Height="200">
+        <Canvas Width="200" Height="200" Margin="20">
             <Image Source="aigamo_body.PNG" Canvas.Left="10" Height="180"/>
             <Image x:Name="ImageFrontFoot" Source="aigamo_foot.PNG" Canvas.Left="50" Canvas.Top="150" Height="40" Width="40">
                 <Image.RenderTransform>
@@ -24,6 +29,11 @@
             <Image x:Name="ImageRearFoot" Source="aigamo_foot.PNG" Canvas.Left="120" Canvas.Top="150" Height="40" Width="40">
                 <Image.RenderTransform>
                     <CompositeTransform CenterX="20" CenterY="20"/>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="ImageSignal" Source="aigamo_signal.PNG" Canvas.Left="46" Canvas.Top="-30" Height="40" Width="40">
+                <Image.RenderTransform>
+                    <CompositeTransform CenterX="20" CenterY="20" ScaleX="0.1" ScaleY="0.1" TranslateY="35"/>
                 </Image.RenderTransform>
             </Image>
         </Canvas>
