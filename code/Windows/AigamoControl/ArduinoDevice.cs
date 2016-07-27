@@ -40,6 +40,7 @@ namespace AigamoControl
 
             _DeviceWriter = new DataWriter(_Device.OutputStream);
             _DeviceReader = new DataReader(_Device.InputStream);
+            _DeviceReader.InputStreamOptions = InputStreamOptions.Partial;
         }
 
         public void Dispose()
@@ -52,6 +53,21 @@ namespace AigamoControl
         {
             _DeviceWriter.WriteBytes(value);
             await _DeviceWriter.StoreAsync();
+        }
+
+        public async Task<byte[]> Read()
+        {
+            uint bytesRead;
+            do
+            {
+                bytesRead = await _DeviceReader.LoadAsync(1024);
+            }
+            while (bytesRead <= 0);
+
+            var value = new byte[bytesRead];
+            _DeviceReader.ReadBytes(value);
+
+            return value;
         }
 
     }
