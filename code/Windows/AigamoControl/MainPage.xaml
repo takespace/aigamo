@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <Page.Resources>
+        <Style x:Name="ButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
         <Storyboard x:Name="StoryboardFeet" RepeatBehavior="Forever">
             <DoubleAnimation Duration="0:0:1" To="-360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ImageFrontFoot" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:1" To="-360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ImageRearFoot" d:IsOptimized="True"/>
@@ -19,10 +25,12 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
+        
         <Viewbox>
             <Canvas Width="200" Height="200" Margin="20">
                 <Image Source="aigamo_body.PNG" Canvas.Left="10" Height="180"/>
@@ -43,27 +51,37 @@
                 </Image>
             </Canvas>
         </Viewbox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        
+        <Grid Grid.Row="1">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+                
             <Slider x:Name="slider" Orientation="Vertical" Margin="10" Value="0" Maximum="255"/>
-            <StackPanel Orientation="Horizontal">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Button Content="ぜんしん" Width="120" Height="120" Margin="12" Click="ForwardLeft_Click" FontSize="24"/>
-                    <Button Grid.Column="1" Content="ぜんしん" Width="120" Height="120" Margin="12" Click="ForwardRight_Click" FontSize="24"/>
-                    <Button Grid.Row="1" Content="とまれ" Width="120" Height="120" Margin="12" Click="StopLeft_Click" FontSize="24"/>
-                    <Button Grid.Row="1" Grid.Column="1" Content="とまれ" Width="120" Height="120" Margin="12" Click="StopRight_Click" FontSize="24"/>
-                    <Button Grid.Row="2" Content="こうたい" Width="120" Height="120" Margin="12" Click="BackwordLeft_Click" FontSize="24"/>
-                    <Button Grid.Row="2" Grid.Column="1" Content="こうたい" Width="120" Height="120" Margin="12" Click="BackwordRight_Click" FontSize="24"/>
-                </Grid>
-            </StackPanel>
-        </StackPanel>
+            
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Content="ひだり回" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Column="1" Content="ぜんしん" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Column="2" Content="みぎ回" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Row="1" Content="ひだり" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="ていし" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="みぎ" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="こうたい" Style="{StaticResource ButtonStyle}"/>
+            </Grid>
+            
+        </Grid>
+        
     </Grid>
 </Page>

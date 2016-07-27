@@ -39,30 +39,5 @@ namespace AigamoControl
             _Arduino?.Dispose();
         }
 
-        private async void ForwardLeft_Click(object sender, RoutedEventArgs e)
-        {
-            await _Arduino.Write(new byte[] { 0, });
-        }
-
-        private async void ForwardRight_Click(object sender, RoutedEventArgs e)
-        {
-            await _Arduino.Write(new byte[] { 1, });
-        }
-
-        private void StopLeft_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void StopRight_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void BackwordLeft_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void BackwordRight_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }
