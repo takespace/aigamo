@@ -18,26 +18,32 @@
         </Storyboard>
     </Page.Resources>
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Canvas Width="200" Height="200" Margin="20">
-            <Image Source="aigamo_body.PNG" Canvas.Left="10" Height="180"/>
-            <Image x:Name="ImageFrontFoot" Source="aigamo_foot.PNG" Canvas.Left="50" Canvas.Top="150" Height="40" Width="40">
-                <Image.RenderTransform>
-                    <CompositeTransform CenterX="20" CenterY="20"/>
-                </Image.RenderTransform>
-            </Image>
-            <Image x:Name="ImageRearFoot" Source="aigamo_foot.PNG" Canvas.Left="120" Canvas.Top="150" Height="40" Width="40">
-                <Image.RenderTransform>
-                    <CompositeTransform CenterX="20" CenterY="20"/>
-                </Image.RenderTransform>
-            </Image>
-            <Image x:Name="ImageSignal" Source="aigamo_signal.PNG" Canvas.Left="46" Canvas.Top="-30" Height="40" Width="40">
-                <Image.RenderTransform>
-                    <CompositeTransform CenterX="20" CenterY="20" ScaleX="0.1" ScaleY="0.1" TranslateY="35"/>
-                </Image.RenderTransform>
-            </Image>
-        </Canvas>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Viewbox>
+            <Canvas Width="200" Height="200" Margin="20">
+                <Image Source="aigamo_body.PNG" Canvas.Left="10" Height="180"/>
+                <Image x:Name="ImageFrontFoot" Source="aigamo_foot.PNG" Canvas.Left="50" Canvas.Top="150" Height="40" Width="40">
+                    <Image.RenderTransform>
+                        <CompositeTransform CenterX="20" CenterY="20"/>
+                    </Image.RenderTransform>
+                </Image>
+                <Image x:Name="ImageRearFoot" Source="aigamo_foot.PNG" Canvas.Left="120" Canvas.Top="150" Height="40" Width="40">
+                    <Image.RenderTransform>
+                        <CompositeTransform CenterX="20" CenterY="20"/>
+                    </Image.RenderTransform>
+                </Image>
+                <Image x:Name="ImageSignal" Source="aigamo_signal.PNG" Canvas.Left="46" Canvas.Top="-30" Height="40" Width="40">
+                    <Image.RenderTransform>
+                        <CompositeTransform CenterX="20" CenterY="20" ScaleX="0.1" ScaleY="0.1" TranslateY="35"/>
+                    </Image.RenderTransform>
+                </Image>
+            </Canvas>
+        </Viewbox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Slider x:Name="slider" Orientation="Vertical" Margin="10" Value="0" Maximum="255"/>
             <StackPanel Orientation="Horizontal">
                 <Grid>
@@ -59,5 +65,5 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Page>
