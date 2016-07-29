@@ -40,20 +40,20 @@ namespace AigamoControl
 
         private void Forward_Click(object sender, RoutedEventArgs e)
         {
-            _Arduino?.Write('F', 0);
-            ChangeFeetSpeed(1);
+            ChangeFeetSpeed(slider.Value);
+            _Arduino?.Write('F', (int)(slider.Value * 100));
         }
 
         private void Backward_Click(object sender, RoutedEventArgs e)
         {
-            _Arduino?.Write('B', 0);
-            ChangeFeetSpeed(-1);
+            ChangeFeetSpeed(-slider.Value);
+            _Arduino?.Write('B', (int)(slider.Value * 100));
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            _Arduino?.Write('S', 0);
             ChangeFeetSpeed(0);
+            _Arduino?.Write('S', 0);
         }
 
         private void Left_Click(object sender, RoutedEventArgs e)
