@@ -30,7 +30,7 @@ namespace AigamoControl
         {
             _Device = device;
 
-            _Device.BaudRate = 9600;
+            _Device.BaudRate = 115200;
             _Device.DataBits = 8;
             _Device.Parity = SerialParity.None;
             _Device.StopBits = SerialStopBitCount.One;
@@ -70,9 +70,10 @@ namespace AigamoControl
             return value;
         }
 
-        public async Task Write(char command, int data)
+        public async Task Write(char command, byte data)
         {
-            await Write(new byte[] { (byte)command, (byte)data, (byte)'\n', });
+            var dataStr = data.ToString("X02");
+            await Write(new byte[] { (byte)':', (byte)command, (byte)dataStr[0], (byte)dataStr[1], (byte)'\n', });
         }
 
     }

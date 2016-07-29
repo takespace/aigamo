@@ -41,13 +41,13 @@ namespace AigamoControl
         private void Forward_Click(object sender, RoutedEventArgs e)
         {
             ChangeFeetSpeed(slider.Value);
-            _Arduino?.Write('F', (int)(slider.Value * 100));
+            _Arduino?.Write('F', (byte)(slider.Value * 100));
         }
 
         private void Backward_Click(object sender, RoutedEventArgs e)
         {
             ChangeFeetSpeed(-slider.Value);
-            _Arduino?.Write('B', (int)(slider.Value * 100));
+            _Arduino?.Write('B', (byte)(slider.Value * 100));
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)

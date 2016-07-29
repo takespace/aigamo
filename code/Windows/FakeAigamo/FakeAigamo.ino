@@ -1,4 +1,5 @@
 void setup() {
+  pinMode(13, OUTPUT);
   CommInitialize();
 }
 
@@ -7,8 +8,27 @@ void loop() {
   int data;
   if (CommTask(&command, &data))
   {
-    Serial.println(command);
-    Serial.println(data);
+    switch (command)
+    {
+    case 'F':
+      for (int i = 0; i < 1; i++)
+      {
+        digitalWrite(13, HIGH);
+        delay(200);
+        digitalWrite(13, LOW);
+        delay(200);
+      }
+      break;
+    case 'B':
+      for (int i = 0; i < 2; i++)
+      {
+        digitalWrite(13, HIGH);
+        delay(200);
+        digitalWrite(13, LOW);
+        delay(200);
+      }
+      break;
+    }
   }
 }
 
