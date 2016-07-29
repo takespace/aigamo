@@ -40,17 +40,40 @@ namespace AigamoControl
 
         private void Forward_Click(object sender, RoutedEventArgs e)
         {
+            _Arduino?.Write('F', 0);
             ChangeFeetSpeed(1);
         }
 
         private void Backward_Click(object sender, RoutedEventArgs e)
         {
+            _Arduino?.Write('B', 0);
             ChangeFeetSpeed(-1);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
+            _Arduino?.Write('S', 0);
             ChangeFeetSpeed(0);
+        }
+
+        private void Left_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('L', 0);
+        }
+
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('R', 0);
+        }
+
+        private void TurnCw_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('c', 0);
+        }
+
+        private void TurnCcw_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('C', 0);
         }
 
         private enum FeetSpeedType

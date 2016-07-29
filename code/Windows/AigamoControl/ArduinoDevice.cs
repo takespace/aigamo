@@ -70,5 +70,10 @@ namespace AigamoControl
             return value;
         }
 
+        public async Task Write(char command, int data)
+        {
+            await Write(new byte[] { (byte)command, (byte)data, (byte)'\n', });
+        }
+
     }
 }
