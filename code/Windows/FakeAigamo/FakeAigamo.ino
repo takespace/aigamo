@@ -10,7 +10,7 @@ void loop() {
   {
     switch (command)
     {
-    case 'F':
+    case 'F': // Forward
       for (int i = 0; i < 1; i++)
       {
         digitalWrite(13, HIGH);
@@ -19,7 +19,7 @@ void loop() {
         delay(200);
       }
       break;
-    case 'B':
+    case 'B': // Backward
       for (int i = 0; i < 2; i++)
       {
         digitalWrite(13, HIGH);
@@ -27,6 +27,16 @@ void loop() {
         digitalWrite(13, LOW);
         delay(200);
       }
+      break;
+    case 'S': // Stop
+      break;
+    case 'L': // Left
+      break;
+    case 'R': // Right
+      break;
+    case 'c': // TurnCw
+      break;
+    case 'C': // TurnCcw
       break;
     }
   }
