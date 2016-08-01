@@ -5,11 +5,26 @@
 #include "NAxisMotion.h"
 #include <math.h>
 
+
+//To stream at 25Hz without using additional timers (time period(ms) =1000/frequency(Hz))
+const int streamPeriod = 1000;//40
+
+//To store the last streamed time stamp
+unsigned long lastStreamTime = 0;
+
 //Object that for the sensor
 NAxisMotion mySensor;
 float Direction = 0;
 
+//for reading value through serial
+char CommandLine[300];
+char ReadChar;
+int counter = 0;
 
+//value for read motor speed
+int on;
+int speed;
+char motor;
 
 
 DRV8830MotorDriver motor1(DRV8830_A1_A0_0_0);
@@ -21,16 +36,24 @@ DRV8830MotorDriver motor4(DRV8830_A1_A0_1_1);
 #define FAULTn  7
 
 //parameter for GPS
-#define RX 10
-#define TX 11
+#define RX1 10
+#define TX1 11
 
-SoftwareSerial gpsSerial(RX,TX);
+//parameter for communication with controller
+#define RX2 12
+#define TX2 13
+
+SoftwareSerial gpsSerial(RX1,TX1);
+
+SoftwareSerial controllerSerial(RX2,TX2);
 
 
 void setup()
 {
-  Serial.begin(57600);//Serial for PC
-  gpsSerial.begin(9600);//communication for GPS
+  Serial.begin(115200);//Serial for PC
+  //gpsSerial.begin(9600);//communication for GPS
+  controllerSerial.begin(115200);
+  
   Wire.begin();//communication for I2C
   Serial.println("Hello, Aigamo interface");
 
@@ -50,13 +73,50 @@ void setup()
   mySensor.setUpdateMode(MANUAL);  
 }
 
-int spd = 0;
 
 void loop()
 {
+ //Motor poling 
+
+  while(controllerSerial.available() > 0){
+    ReadChar = controllerSerial.read();
+    CommandLine[counter] = ReadChar;
+    if(ReadChar == '\n'){
+      Serial.println();
+      Serial.println(CommandLine);
+      
+      sscanf(CommandLine, "motor:%d:%c:%d", &on, &motor, &speed);
+
+   Serial.println();
+   Serial.println(on);
+   Serial.println(motor);
+   Serial.println(speed);
+ 
+   motor1.setSpeed(speed);
+   motor2.setSpeed(speed);
+   motor3.setSpeed(speed);
+   motor4.setSpeed(speed);
+ 
+      counter = 0;
+      break;
+    }else{
+      counter++;
+    }
+  }  
+  
+ //Sensor poling
+ if((millis() - lastStreamTime) >= streamPeriod){
+  lastStreamTime = millis();    
+
+  
   //IMU update
   mySensor.updateMag();
   mySensor.updateCalibStatus();  	//Update the Calibration Status
+
+  Serial.println("");
+  Serial.println("");
+  Serial.println("");
+
 
   //display IMU value
   Serial.print(" X: ");
@@ -82,50 +142,16 @@ void loop()
   Serial.println();
 
   //  
-  
- if(gpsSerial.available()){
+ while(gpsSerial.available()){ 
+// if(gpsSerial.available()){
    Serial.write(gpsSerial.read());
  }  
-  char c;
 
-  if (Serial.available())
-  {
-    c = Serial.read();
-    if (c == '+')
-    {
-      spd++;
-      motor1.setSpeed(spd);
-      motor2.setSpeed(spd);
-      motor3.setSpeed(spd);
-      motor4.setSpeed(spd);
-      spd = motor1.getSpeed();
-      Serial.println(spd);
-    }
-    else if (c == '-')
-    {
-      spd--;
-      motor1.setSpeed(spd);
-      motor2.setSpeed(spd);
-      motor3.setSpeed(spd);
-      motor4.setSpeed(spd);
-      spd = motor1.getSpeed();
-      Serial.println(spd);
-    }
-    else if (c == 'b')
-    {
-      spd = 0;
-      motor1.setSpeed(spd);
-      motor2.setSpeed(spd);
-      motor3.setSpeed(spd);
-      motor4.setSpeed(spd);
-      motor1.brake();
-      motor2.brake();
-      motor3.brake();
-      motor4.brake();
-      spd = motor1.getSpeed();
-      Serial.println(spd);
-    }
-  }
+ }//if or while
 }
 
+void RunMotor(char r, int spd){
+  
+  
+}
 
