@@ -25,7 +25,7 @@ namespace AigamoControl
             bitmapSignal.DecodePixelWidth = 477;
             bitmapSignal.DecodePixelHeight = 164;
 
-            var dis = await ArduinoDevice.GetDeviceInformationsFromUsbVidPidAsync(ArduinoDevice.INTERFACE_ARDUINO_UNO_R3);
+            var dis = await ArduinoDevice.GetDeviceInformationsFromUsbVidPidAsync(ArduinoDevice.INTERFACE_ARDUINO_UNO_R3TAKE);
             if (dis.Count <= 0) return;
 
             _Arduino = await ArduinoDevice.FromIdAsync(dis[0].Id);

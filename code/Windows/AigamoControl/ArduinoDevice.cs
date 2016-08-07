@@ -9,6 +9,7 @@ namespace AigamoControl
     class ArduinoDevice : IDisposable
     {
         public static ushort[] INTERFACE_ARDUINO_UNO_R3 { get { return new ushort[] { 0x2A03, 0x0043 }; } }
+        public static ushort[] INTERFACE_ARDUINO_UNO_R3TAKE { get { return new ushort[] { 0x2341, 0x0043 }; } }
         public static readonly ushort[] INTERFACE_TTL232R5V = new ushort[] { 0x0403, 0x6001 };
 
         private SerialDevice _Device;
