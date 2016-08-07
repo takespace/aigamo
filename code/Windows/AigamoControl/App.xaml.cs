@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace App2
+namespace AigamoControl
 {
     /// <summary>
     /// 既定の Application クラスを補完するアプリケーション固有の動作を提供します。

@@ -7,8 +7,8 @@
     <ProjectGuid>{0EFA26BA-FBC4-418F-9006-1260FF9E606B}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App2</RootNamespace>
-    <AssemblyName>App2</AssemblyName>
+    <RootNamespace>AigamoControl</RootNamespace>
+    <AssemblyName>AigamoControl</AssemblyName>
     <DefaultLanguage>ja-JP</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArduinoDevice.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -107,9 +108,9 @@
     <None Include="App2_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="20160625B.PNG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="aigamo_body.PNG" />
+    <Content Include="aigamo_foot.PNG" />
+    <Content Include="aigamo_signal.PNG" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

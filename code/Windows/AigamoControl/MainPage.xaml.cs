@@ -1,71 +1,164 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Milkcocoa;
+using Windows.UI.Xaml.Media.Imaging;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
 
-namespace App2
+namespace AigamoControl
 {
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private ArduinoDevice _Arduino;
+
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private Milkcocoa.Milkcocoa milkcocoa;
-        private Milkcocoa.DataStore dataStore;
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            milkcocoa = new Milkcocoa.Milkcocoa("iceinixlzq3.mlkcca.com");
-            dataStore = milkcocoa.dataStore("aigamo");
+            // 画質が落ちるのを防ぐ措置
+            var bitmapSignal = ImageSignal.Source as BitmapImage;
+            bitmapSignal.DecodePixelWidth = 477;
+            bitmapSignal.DecodePixelHeight = 164;
+
+            var dis = await ArduinoDevice.GetDeviceInformationsFromUsbVidPidAsync(ArduinoDevice.INTERFACE_ARDUINO_UNO_R3TAKE);
+            if (dis.Count <= 0) return;
+
+            _Arduino = await ArduinoDevice.FromIdAsync(dis[0].Id);
+
+            StoryboardAntena.Begin();
         }
 
-        private void ForwardLeft_Click(object sender, RoutedEventArgs e)
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "L", on = 1, speed = (int)slider.Value, });
+            _Arduino?.Dispose();
         }
 
-        private void ForwardRight_Click(object sender, RoutedEventArgs e)
+        private void Forward_Click(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "R", on = 1, speed = (int)slider.Value, });
+            ChangeFeetSpeed(slider.Value);
+            _Arduino?.Write('F', (byte)(slider.Value * 100));
         }
 
-        private void StopLeft_Click(object sender, RoutedEventArgs e)
+        private void Backward_Click(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "L", on = 0, speed = (int)slider.Value, });
+            ChangeFeetSpeed(-slider.Value);
+            _Arduino?.Write('B', (byte)(slider.Value * 100));
         }
 
-        private void StopRight_Click(object sender, RoutedEventArgs e)
+        private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "R", on = 0, speed = (int)slider.Value, });
+            ChangeFeetSpeed(0);
+            _Arduino?.Write('S', 0);
         }
 
-        private void BackwordLeft_Click(object sender, RoutedEventArgs e)
+        private void Left_Click(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "L", on = -1, speed = (int)slider.Value, });
+            _Arduino?.Write('L', 0);
         }
 
-        private void BackwordRight_Click(object sender, RoutedEventArgs e)
+        private void Right_Click(object sender, RoutedEventArgs e)
         {
-            milkcocoa.dataStore("aigamo").send(new { motor = "R", on = -1, speed = (int)slider.Value, });
+            _Arduino?.Write('R', 0);
         }
 
+        private void TurnCw_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('c', 0);
+        }
+
+        private void TurnCcw_Click(object sender, RoutedEventArgs e)
+        {
+            _Arduino?.Write('C', 0);
+        }
+
+        private enum FeetSpeedType
+        {
+            Stop,
+            ForwardFast,
+            ForwardSlow,
+            BackwardFast,
+            BackwardSlow,
+        }
+
+        private FeetSpeedType __FeetSpeed = FeetSpeedType.Stop;
+        private FeetSpeedType _FeetSpeed
+        {
+            get
+            {
+                return __FeetSpeed;
+            }
+            set
+            {
+                if (__FeetSpeed == value) return;
+
+                if (value == FeetSpeedType.Stop)
+                {
+                    StoryboardFeet.Stop();
+                }
+                else
+                {
+                    StoryboardFeet.Stop();
+                    switch (value)
+                    {
+                        case FeetSpeedType.ForwardFast:
+                            AnimationFootFront.To = -360;
+                            AnimationFootFront.Duration = new Duration(new System.TimeSpan(0, 0, 0, 1));
+                            AnimationFootRear.To = -360;
+                            AnimationFootRear.Duration = new Duration(new System.TimeSpan(0, 0, 0, 1));
+                            break;
+                        case FeetSpeedType.ForwardSlow:
+                            AnimationFootFront.To = -360;
+                            AnimationFootFront.Duration = new Duration(new System.TimeSpan(0, 0, 0, 3));
+                            AnimationFootRear.To = -360;
+                            AnimationFootRear.Duration = new Duration(new System.TimeSpan(0, 0, 0, 3));
+                            break;
+                        case FeetSpeedType.BackwardFast:
+                            AnimationFootFront.To = 360;
+                            AnimationFootFront.Duration = new Duration(new System.TimeSpan(0, 0, 0, 1));
+                            AnimationFootRear.To = 360;
+                            AnimationFootRear.Duration = new Duration(new System.TimeSpan(0, 0, 0, 1));
+                            break;
+                        case FeetSpeedType.BackwardSlow:
+                            AnimationFootFront.To = 360;
+                            AnimationFootFront.Duration = new Duration(new System.TimeSpan(0, 0, 0, 3));
+                            AnimationFootRear.To = 360;
+                            AnimationFootRear.Duration = new Duration(new System.TimeSpan(0, 0, 0, 3));
+                            break;
+                    }
+                    StoryboardFeet.Begin();
+                }
+
+                __FeetSpeed = value;
+            }
+        }
+
+        private void ChangeFeetSpeed(double speed)
+        {
+            if (speed == 0)
+            {
+                _FeetSpeed = FeetSpeedType.Stop;
+            }
+            else if (speed > 0.5)
+            {
+                _FeetSpeed = FeetSpeedType.ForwardFast;
+            }
+            else if (speed > 0)
+            {
+                _FeetSpeed = FeetSpeedType.ForwardSlow;
+            }
+            else if (speed < -0.5)
+            {
+                _FeetSpeed = FeetSpeedType.BackwardFast;
+            }
+            else
+            {
+                _FeetSpeed = FeetSpeedType.BackwardSlow;
+            }
+        }
     }
 }
