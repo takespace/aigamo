@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
@@ -73,6 +74,7 @@ namespace AigamoControl
 
         public async Task Write(char command, byte data)
         {
+            Debug.WriteLine($"{command} {data}");
             var dataStr = data.ToString("X02");
             await Write(new byte[] { (byte)':', (byte)command, (byte)dataStr[0], (byte)dataStr[1], (byte)'\n', });
         }

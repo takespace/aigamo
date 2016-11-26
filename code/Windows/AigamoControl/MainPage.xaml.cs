@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
@@ -25,6 +26,19 @@ namespace AigamoControl
             bitmapSignal.DecodePixelWidth = 477;
             bitmapSignal.DecodePixelHeight = 164;
 
+            ForwardButton.AddHandler(PointerPressedEvent, new PointerEventHandler(ForwardButton_PointerPressed), true);
+            ForwardButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+            BackwardButton.AddHandler(PointerPressedEvent, new PointerEventHandler(BackwardButton_PointerPressed), true);
+            BackwardButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+            LeftButton.AddHandler(PointerPressedEvent, new PointerEventHandler(LeftButton_PointerPressed), true);
+            LeftButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+            RightButton.AddHandler(PointerPressedEvent, new PointerEventHandler(RightButton_PointerPressed), true);
+            RightButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+            TurnCwButton.AddHandler(PointerPressedEvent, new PointerEventHandler(TurnCwButton_PointerPressed), true);
+            TurnCwButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+            TurnCcwButton.AddHandler(PointerPressedEvent, new PointerEventHandler(TurnCcwButton_PointerPressed), true);
+            TurnCcwButton.AddHandler(PointerReleasedEvent, new PointerEventHandler(Button_PointerReleased), true);
+
             var dis = await ArduinoDevice.GetDeviceInformationsFromUsbVidPidAsync(ArduinoDevice.INTERFACE_ARDUINO_UNO_R3TAKE);
             if (dis.Count <= 0) return;
 
@@ -38,42 +52,42 @@ namespace AigamoControl
             _Arduino?.Dispose();
         }
 
-        private void Forward_Click(object sender, RoutedEventArgs e)
+        private void ForwardButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             ChangeFeetSpeed(slider.Value);
             _Arduino?.Write('F', (byte)(slider.Value * 100));
         }
 
-        private void Backward_Click(object sender, RoutedEventArgs e)
+        private void BackwardButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             ChangeFeetSpeed(-slider.Value);
             _Arduino?.Write('B', (byte)(slider.Value * 100));
         }
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeFeetSpeed(0);
-            _Arduino?.Write('S', 0);
-        }
-
-        private void Left_Click(object sender, RoutedEventArgs e)
+        private void LeftButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _Arduino?.Write('L', 0);
         }
 
-        private void Right_Click(object sender, RoutedEventArgs e)
+        private void RightButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _Arduino?.Write('R', 0);
         }
 
-        private void TurnCw_Click(object sender, RoutedEventArgs e)
+        private void TurnCwButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _Arduino?.Write('c', 0);
         }
 
-        private void TurnCcw_Click(object sender, RoutedEventArgs e)
+        private void TurnCcwButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _Arduino?.Write('C', 0);
+        }
+
+        private void Button_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ChangeFeetSpeed(0);
+            _Arduino?.Write('S', 0);
         }
 
         private enum FeetSpeedType
